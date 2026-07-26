@@ -84,17 +84,11 @@ export const evaluateRules = ( rulesConfig, postData, blocks ) => {
 				break;
 
 			case 'min_categories':
-				result = {
-					passed: true,
-					message: 'Category count is validated on publish.',
-				};
+				result = evaluateMinCategories( rule.config || {}, postData );
 				break;
 
 			case 'min_tags':
-				result = {
-					passed: true,
-					message: 'Tag count is validated on publish.',
-				};
+				result = evaluateMinTags( rule.config || {}, postData );
 				break;
 
 			case 'custom_field_required':
@@ -386,5 +380,39 @@ const evaluateRequiredBlock = ( config, blocks ) => {
 		message: passed
 			? `Required block(s) found.`
 			: `Missing required block(s): ${ missingBlocks.join( ', ' ) }`,
+	};
+};
+
+/**
+ * Check minimum category count.
+ */
+const evaluateMinCategories = ( config, postData ) => {
+	const minCount = parseInt( config.min_count, 10 ) || 1;
+	const count = postData.categories?.length || 0;
+	const passed = count >= minCount;
+
+	return {
+		passed,
+		message: passed
+			? `Post has ${ count } categories (meets minimum of ${ minCount }).`
+			: `Post has ${ count } categories (minimum ${ minCount } required).`,
+		panelToFocus: 'category',
+	};
+};
+
+/**
+ * Check minimum tag count.
+ */
+const evaluateMinTags = ( config, postData ) => {
+	const minCount = parseInt( config.min_count, 10 ) || 1;
+	const count = postData.tags?.length || 0;
+	const passed = count >= minCount;
+
+	return {
+		passed,
+		message: passed
+			? `Post has ${ count } tags (meets minimum of ${ minCount }).`
+			: `Post has ${ count } tags (minimum ${ minCount } required).`,
+		panelToFocus: 'post-tags',
 	};
 };

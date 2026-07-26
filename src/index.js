@@ -38,7 +38,7 @@ const PublishGateSidebar = () => {
 	const [ isEvaluating, setIsEvaluating ] = useState( true );
 	const prevResultsRef = useRef( '' );
 
-	const { postTitle, postExcerpt, featuredMedia, blocks, postId, postType } = useSelect(
+	const { postTitle, postExcerpt, featuredMedia, categories, tags, blocks, postId, postType } = useSelect(
 		( select ) => {
 			const editor = select( 'core/editor' );
 			const blockEditor = select( 'core/block-editor' );
@@ -47,6 +47,8 @@ const PublishGateSidebar = () => {
 				postTitle: editor.getEditedPostAttribute( 'title' ) || '',
 				postExcerpt: editor.getEditedPostAttribute( 'excerpt' ) || '',
 				featuredMedia: editor.getEditedPostAttribute( 'featured_media' ) || 0,
+				categories: editor.getEditedPostAttribute( 'categories' ) || [],
+				tags: editor.getEditedPostAttribute( 'tags' ) || [],
 				blocks: blockEditor.getBlocks(),
 				postId: editor.getCurrentPostId(),
 				postType: editor.getCurrentPostType(),
@@ -71,6 +73,8 @@ const PublishGateSidebar = () => {
 			title: postTitle,
 			excerpt: postExcerpt,
 			featured_media: featuredMedia,
+			categories: categories,
+			tags: tags,
 		};
 
 		const newResults = evaluateRules( rulesConfig, postData, blocks );
@@ -92,7 +96,7 @@ const PublishGateSidebar = () => {
 				unlockPostSaving( 'publish-gate-lock' );
 			}
 		}
-	}, [ postTitle, postExcerpt, featuredMedia, blocks, postType, rulesConfig ] );
+	}, [ postTitle, postExcerpt, featuredMedia, categories, tags, blocks, postType, rulesConfig ] );
 
 	const allPassed = results.length > 0 && results.every( ( r ) => r.passed );
 	const failedCount = results.filter( ( r ) => ! r.passed ).length;

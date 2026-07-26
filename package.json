@@ -10,8 +10,18 @@
 		"start": "wp-scripts start",
 		"lint:js": "wp-scripts lint-js src/",
 		"lint:css": "wp-scripts lint-style src/",
-		"format": "wp-scripts format src/"
+		"format": "wp-scripts format src/",
+		"production": "wp-scripts build && wp-scripts plugin-zip"
 	},
+	"files": [
+		"publish-gate.php",
+		"readme.txt",
+		"README.md",
+		"uninstall.php",
+		"assets",
+		"build",
+		"includes"
+	],
 	"devDependencies": {
 		"@wordpress/blocks": "^15.24.0",
 		"@wordpress/scripts": "^30.0.0"

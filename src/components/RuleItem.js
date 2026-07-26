@@ -10,7 +10,8 @@ const RuleItem = ( { result } ) => {
 	const { ruleId, label, passed, message, blockClientIds, panelToFocus } = result;
 
 	// Note: these might be undefined if not in a standard post editor context (e.g. site editor).
-	const { openGeneralSidebar, toggleEditorPanelOpened } = useDispatch( 'core/edit-post' ) || {};
+	const { openGeneralSidebar } = useDispatch( 'core/edit-post' ) || {};
+	const { toggleEditorPanelOpened } = useDispatch( 'core/editor' ) || {};
 
 	const handleFocusBlock = ( clientId ) => {
 		scrollToBlock( clientId );

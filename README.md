@@ -24,11 +24,13 @@ This plugin uses modern JavaScript/React built via `@wordpress/scripts`.
 
 ## Building for Release
 
-Before pushing a new release to WordPress.org, you must compile the production assets:
+Before pushing a new release to WordPress.org, you must compile the production assets and bundle the plugin. You can do this automatically with:
 
 ```bash
-npm run build
+npm run production
 ```
+
+This script will run the Webpack build process and automatically generate a deployable `publish-gate.zip` archive containing everything needed for production.
 
 > **Note:** Do not forget to commit the updated `/build/` directory to this repository before deploying to WordPress.org SVN. The `/build/` folder is strictly required for the plugin to function in production.
 

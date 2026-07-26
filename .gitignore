@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build output
+# (Note: We intentionally DO NOT ignore /build/ since WordPress.org requires the compiled assets in the repo for SVN deployment)
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.swp
+*.swo

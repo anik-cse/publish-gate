@@ -1,0 +1,19 @@
+{
+	"name": "publish-gate",
+	"version": "1.0.0",
+	"description": "A lightweight Block Editor quality-control gateway for WordPress.",
+	"author": "Mir Monoarul Alam",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start",
+		"lint:js": "wp-scripts lint-js src/",
+		"lint:css": "wp-scripts lint-style src/",
+		"format": "wp-scripts format src/"
+	},
+	"devDependencies": {
+		"@wordpress/blocks": "^15.24.0",
+		"@wordpress/scripts": "^30.0.0"
+	}
+}

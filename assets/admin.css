@@ -1,0 +1,94 @@
+/**
+ * Publish Gate — Admin Settings Page Styles
+ *
+ * @package Publish_Gate
+ */
+
+/* Custom Rule Form */
+.publish-gate-add-rule-form {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	padding: 16px 20px;
+	margin: 16px 0;
+	max-width: 800px;
+}
+
+.publish-gate-add-rule-form h4 {
+	margin: 0 0 12px;
+	font-size: 14px;
+	color: #1d2327;
+}
+
+.publish-gate-new-rule-table {
+	margin: 0;
+}
+
+.publish-gate-new-rule-table th {
+	padding: 10px 10px 10px 0;
+	width: 140px;
+}
+
+.publish-gate-new-rule-table td {
+	padding: 10px 0;
+}
+
+/* Rule Type Badge */
+.publish-gate-rule-type-badge {
+	display: inline-block;
+	background: #f0f0f1;
+	border: 1px solid #c3c4c7;
+	border-radius: 3px;
+	padding: 2px 8px;
+	font-size: 12px;
+	color: #50575e;
+	margin-top: 4px;
+}
+
+/* Delete Button */
+.publish-gate-delete-rule {
+	margin-top: 8px !important;
+	color: #b32d2e !important;
+}
+
+.publish-gate-delete-rule:hover {
+	color: #a00 !important;
+}
+
+/* Status Messages */
+.publish-gate-status-msg {
+	display: inline-block;
+	margin-left: 12px;
+	font-style: italic;
+}
+
+.publish-gate-status-msg.success {
+	color: #00a32a;
+}
+
+.publish-gate-status-msg.error {
+	color: #d63638;
+}
+
+/* Config Container */
+#pg-new-rule-config-container .description {
+	display: block;
+	margin-top: 4px;
+	font-style: italic;
+	color: #646970;
+}
+
+#pg-new-rule-config-container label {
+	display: block;
+	margin-bottom: 8px;
+}
+
+#pg-new-rule-config-container input[type="text"],
+#pg-new-rule-config-container input[type="number"] {
+	margin-top: 4px;
+}
+
+/* Custom rule field styling */
+.form-table td .publish-gate-rule-type-badge {
+	margin-top: 6px;
+}

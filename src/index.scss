@@ -1,0 +1,205 @@
+/**
+ * Publish Gate — Sidebar Styles
+ *
+ * Styles for the sidebar panel, rule items, status indicators,
+ * and the block highlight animation.
+ */
+
+/* ===== Sidebar Panel ===== */
+
+.publish-gate-panel {
+	padding: 16px;
+
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 16px;
+		padding-bottom: 12px;
+		border-bottom: 1px solid #e0e0e0;
+	}
+
+	&__status {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 6px 12px;
+		border-radius: 20px;
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1.4;
+
+		&--passed {
+			background: rgba(0, 163, 82, 0.08);
+			color: #00733a;
+		}
+
+		&--failed {
+			background: rgba(204, 24, 30, 0.08);
+			color: #cc181e;
+		}
+
+		&--evaluating {
+			background: rgba(0, 0, 0, 0.04);
+			color: #757575;
+		}
+	}
+
+	&__rules-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	&__override-section {
+		margin-top: 20px;
+		padding-top: 16px;
+		border-top: 1px solid #e0e0e0;
+	}
+
+	&__override-btn {
+		width: 100%;
+		justify-content: center;
+
+		&.is-primary {
+			background: #b35900;
+			border-color: #b35900;
+
+			&:hover {
+				background: #994d00;
+				border-color: #994d00;
+			}
+
+			&:focus {
+				box-shadow: 0 0 0 2px #fff, 0 0 0 4px #b35900;
+			}
+		}
+	}
+
+	&__override-reason {
+		width: 100%;
+		margin-bottom: 12px;
+		min-height: 60px;
+		resize: vertical;
+	}
+
+	&__override-label {
+		display: block;
+		font-size: 12px;
+		font-weight: 500;
+		color: #757575;
+		margin-bottom: 6px;
+	}
+
+	&__override-success {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		padding: 8px 12px;
+		border-radius: 4px;
+		background: rgba(0, 163, 82, 0.08);
+		color: #00733a;
+		font-size: 13px;
+		margin-top: 12px;
+	}
+}
+
+/* ===== Rule Item ===== */
+
+.publish-gate-rule {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 10px 0;
+	border-bottom: 1px solid #f0f0f0;
+
+	&:last-child {
+		border-bottom: none;
+	}
+
+	&__icon {
+		flex-shrink: 0;
+		width: 20px;
+		height: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		font-size: 12px;
+		line-height: 1;
+		margin-top: 1px;
+
+		&--passed {
+			background: rgba(0, 163, 82, 0.12);
+			color: #00733a;
+		}
+
+		&--failed {
+			background: rgba(204, 24, 30, 0.12);
+			color: #cc181e;
+		}
+	}
+
+	&__content {
+		flex: 1;
+		min-width: 0;
+	}
+
+	&__label {
+		font-size: 13px;
+		font-weight: 600;
+		color: #1e1e1e;
+		margin: 0 0 2px;
+		line-height: 1.4;
+	}
+
+	&__message {
+		font-size: 12px;
+		color: #757575;
+		margin: 0;
+		line-height: 1.5;
+	}
+
+	&__focus-btn {
+		font-size: 11px !important;
+		min-height: 24px !important;
+		padding: 0 8px !important;
+		margin-top: 6px;
+	}
+}
+
+/* ===== Block Highlight Animation ===== */
+
+@keyframes publish-gate-pulse {
+	0% {
+		box-shadow: 0 0 0 0 rgba(204, 24, 30, 0.4);
+	}
+
+	50% {
+		box-shadow: 0 0 0 6px rgba(204, 24, 30, 0.1);
+	}
+
+	100% {
+		box-shadow: 0 0 0 0 rgba(204, 24, 30, 0);
+	}
+}
+
+.publish-gate-highlight {
+	outline: 2px solid #cc181e !important;
+	outline-offset: 2px;
+	border-radius: 2px;
+	animation: publish-gate-pulse 0.8s ease-in-out 2;
+	transition: outline-color 0.3s ease;
+}
+
+/* ===== Spinner ===== */
+
+.publish-gate-spinner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	color: #757575;
+	gap: 8px;
+	font-size: 13px;
+}

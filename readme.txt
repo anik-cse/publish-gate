@@ -8,7 +8,7 @@ Stable tag: 1.0.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-The pre-publish checklist you actually control. Lock the Publish button until authors meet your exact content standards, from required blocks to word counts.
+A lightweight pre-publish checklist that locks the Publish button until authors meet your exact content standards.
 
 == Description ==
 

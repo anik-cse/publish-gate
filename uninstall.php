@@ -19,12 +19,14 @@ delete_option( 'publish_gate_custom_rules' );
 // Clean up all post meta entries.
 global $wpdb;
 
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 $wpdb->delete(
 	$wpdb->postmeta,
 	array( 'meta_key' => '_publish_gate_passed_status' ),
 	array( '%s' )
 );
 
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 $wpdb->delete(
 	$wpdb->postmeta,
 	array( 'meta_key' => '_publish_gate_override_reason' ),
@@ -32,6 +34,7 @@ $wpdb->delete(
 );
 
 // Clean up any transients.
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 $wpdb->query(
 	$wpdb->prepare(
 		"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
@@ -39,6 +42,7 @@ $wpdb->query(
 	)
 );
 
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 $wpdb->query(
 	$wpdb->prepare(
 		"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",

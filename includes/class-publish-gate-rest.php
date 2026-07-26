@@ -236,11 +236,16 @@ class Publish_Gate_REST {
 				$title      = trim( $post->post_title );
 				$word_count = empty( $title ) ? 0 : str_word_count( $title );
 				$passed     = $word_count >= $min_words;
+				if ( $passed ) {
+					/* translators: %d: word count */
+					$msg = sprintf( __( 'Title word count: %d (meets minimum).', 'publish-gate' ), $word_count );
+				} else {
+					/* translators: 1: current word count, 2: minimum required */
+					$msg = sprintf( __( 'Title word count: %1$d (minimum %2$d required).', 'publish-gate' ), $word_count, $min_words );
+				}
 				return array(
 					'passed'  => $passed,
-					'message' => $passed
-						? sprintf( __( 'Title word count: %d (meets minimum).', 'publish-gate' ), $word_count )
-						: sprintf( __( 'Title word count: %1$d (minimum %2$d required).', 'publish-gate' ), $word_count, $min_words ),
+					'message' => $msg,
 				);
 
 			case 'excerpt_required':
@@ -273,11 +278,16 @@ class Publish_Gate_REST {
 				$count_headings( $blocks );
 				$passed = $count >= $min_count;
 
+				if ( $passed ) {
+					/* translators: %d: number of headings */
+					$msg = sprintf( __( 'Found %d heading(s) (meets minimum).', 'publish-gate' ), $count );
+				} else {
+					/* translators: 1: found headings, 2: minimum required headings */
+					$msg = sprintf( __( 'Found %1$d heading(s) (minimum %2$d required).', 'publish-gate' ), $count, $min_count );
+				}
 				return array(
 					'passed'  => $passed,
-					'message' => $passed
-						? sprintf( __( 'Found %d heading(s) (meets minimum).', 'publish-gate' ), $count )
-						: sprintf( __( 'Found %1$d heading(s) (minimum %2$d required).', 'publish-gate' ), $count, $min_count ),
+					'message' => $msg,
 				);
 
 			case 'content_contains':
@@ -295,11 +305,16 @@ class Publish_Gate_REST {
 					$found = ( false !== stripos( $content, $pattern ) );
 				}
 
+				if ( $found ) {
+					/* translators: %s: text pattern */
+					$msg = sprintf( __( 'Content contains "%s".', 'publish-gate' ), $pattern );
+				} else {
+					/* translators: %s: text pattern */
+					$msg = sprintf( __( 'Content must contain "%s".', 'publish-gate' ), $pattern );
+				}
 				return array(
 					'passed'  => $found,
-					'message' => $found
-						? sprintf( __( 'Content contains "%s".', 'publish-gate' ), $pattern )
-						: sprintf( __( 'Content must contain "%s".', 'publish-gate' ), $pattern ),
+					'message' => $msg,
 				);
 
 			case 'content_not_contains':
@@ -317,11 +332,16 @@ class Publish_Gate_REST {
 					$found = ( false !== stripos( $content, $pattern ) );
 				}
 
+				if ( ! $found ) {
+					/* translators: %s: text pattern */
+					$msg = sprintf( __( 'Content does not contain "%s".', 'publish-gate' ), $pattern );
+				} else {
+					/* translators: %s: text pattern */
+					$msg = sprintf( __( 'Content must NOT contain "%s".', 'publish-gate' ), $pattern );
+				}
 				return array(
 					'passed'  => ! $found,
-					'message' => ! $found
-						? sprintf( __( 'Content does not contain "%s".', 'publish-gate' ), $pattern )
-						: sprintf( __( 'Content must NOT contain "%s".', 'publish-gate' ), $pattern ),
+					'message' => $msg,
 				);
 
 			case 'min_categories':
@@ -330,11 +350,16 @@ class Publish_Gate_REST {
 				$count      = is_array( $categories ) ? count( $categories ) : 0;
 				$passed     = $count >= $min_count;
 
+				if ( $passed ) {
+					/* translators: 1: current categories count, 2: minimum required categories */
+					$msg = sprintf( __( 'Post has %1$d categories (minimum %2$d).', 'publish-gate' ), $count, $min_count );
+				} else {
+					/* translators: 1: current categories count, 2: minimum required categories */
+					$msg = sprintf( __( 'Post has %1$d categories (minimum %2$d required).', 'publish-gate' ), $count, $min_count );
+				}
 				return array(
 					'passed'  => $passed,
-					'message' => $passed
-						? sprintf( __( 'Post has %d categories (minimum %d).', 'publish-gate' ), $count, $min_count )
-						: sprintf( __( 'Post has %d categories (minimum %d required).', 'publish-gate' ), $count, $min_count ),
+					'message' => $msg,
 				);
 
 			case 'min_tags':
@@ -343,11 +368,16 @@ class Publish_Gate_REST {
 				$count     = is_array( $tags ) ? count( $tags ) : 0;
 				$passed    = $count >= $min_count;
 
+				if ( $passed ) {
+					/* translators: 1: current tags count, 2: minimum required tags */
+					$msg = sprintf( __( 'Post has %1$d tags (minimum %2$d).', 'publish-gate' ), $count, $min_count );
+				} else {
+					/* translators: 1: current tags count, 2: minimum required tags */
+					$msg = sprintf( __( 'Post has %1$d tags (minimum %2$d required).', 'publish-gate' ), $count, $min_count );
+				}
 				return array(
 					'passed'  => $passed,
-					'message' => $passed
-						? sprintf( __( 'Post has %d tags (minimum %d).', 'publish-gate' ), $count, $min_count )
-						: sprintf( __( 'Post has %d tags (minimum %d required).', 'publish-gate' ), $count, $min_count ),
+					'message' => $msg,
 				);
 
 			case 'custom_field_required':
@@ -360,22 +390,32 @@ class Publish_Gate_REST {
 				$value  = get_post_meta( $post->ID, $field_name, true );
 				$passed = ! empty( $value );
 
+				if ( $passed ) {
+					/* translators: %s: custom field name */
+					$msg = sprintf( __( 'Custom field "%s" is set.', 'publish-gate' ), $field_name );
+				} else {
+					/* translators: %s: custom field name */
+					$msg = sprintf( __( 'Custom field "%s" is required.', 'publish-gate' ), $field_name );
+				}
 				return array(
 					'passed'  => $passed,
-					'message' => $passed
-						? sprintf( __( 'Custom field "%s" is set.', 'publish-gate' ), $field_name )
-						: sprintf( __( 'Custom field "%s" is required.', 'publish-gate' ), $field_name ),
+					'message' => $msg,
 				);
 
 			case 'max_word_count':
 				$max_words  = isset( $rule['config']['max_words'] ) ? absint( $rule['config']['max_words'] ) : 1000;
 				$word_count = str_word_count( wp_strip_all_tags( $post->post_content ) );
 				$passed     = $word_count <= $max_words;
+				if ( $passed ) {
+					/* translators: %d: word count */
+					$msg = sprintf( __( 'Word count: %d (meets maximum).', 'publish-gate' ), $word_count );
+				} else {
+					/* translators: 1: current word count, 2: maximum allowed words */
+					$msg = sprintf( __( 'Word count: %1$d (maximum %2$d allowed).', 'publish-gate' ), $word_count, $max_words );
+				}
 				return array(
 					'passed'  => $passed,
-					'message' => $passed
-						? sprintf( __( 'Word count: %d (meets maximum).', 'publish-gate' ), $word_count )
-						: sprintf( __( 'Word count: %1$d (maximum %2$d allowed).', 'publish-gate' ), $word_count, $max_words ),
+					'message' => $msg,
 				);
 
 			case 'required_block':
@@ -406,11 +446,15 @@ class Publish_Gate_REST {
 				$missing_blocks = array_diff( $required_blocks, $found_blocks );
 				$passed = empty( $missing_blocks );
 
+				if ( $passed ) {
+					$msg = __( 'Required block(s) present.', 'publish-gate' );
+				} else {
+					/* translators: %s: comma-separated list of missing block names */
+					$msg = sprintf( __( 'Missing required block(s): %s', 'publish-gate' ), implode( ', ', $missing_blocks ) );
+				}
 				return array(
 					'passed'  => $passed,
-					'message' => $passed
-						? sprintf( __( 'Required block(s) present.', 'publish-gate' ) )
-						: sprintf( __( 'Missing required block(s): %s', 'publish-gate' ), implode( ', ', $missing_blocks ) ),
+					'message' => $msg,
 				);
 
 			default:

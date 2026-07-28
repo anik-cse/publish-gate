@@ -27,7 +27,7 @@ const SidebarPanel = ( { results, isEvaluating, allPassed, canOverride, postId }
 
 		try {
 			await apiFetch( {
-				path: '/publish-gate/v1/override',
+				path: '/mirm-editorial-guard/v1/override',
 				method: 'POST',
 				data: {
 					post_id: postId,
@@ -38,17 +38,17 @@ const SidebarPanel = ( { results, isEvaluating, allPassed, canOverride, postId }
 			// Update post meta in the editor store.
 			editPost( {
 				meta: {
-					_publish_gate_passed_status: 'overridden',
-					_publish_gate_override_reason: overrideReason.trim(),
+					_mirm_editorial_guard_passed_status: 'overridden',
+					_mirm_editorial_guard_override_reason: overrideReason.trim(),
 				},
 			} );
 
 			// Unlock saving.
-			unlockPostSaving( 'publish-gate-lock' );
+			unlockPostSaving( 'mirm-editorial-guard-lock' );
 			setOverrideSuccess( true );
 		} catch ( error ) {
 			// eslint-disable-next-line no-console
-			console.error( 'Publish Gate override failed:', error );
+			console.error( 'MirM Editorial Guard override failed:', error );
 		} finally {
 			setIsOverriding( false );
 		}
@@ -57,7 +57,7 @@ const SidebarPanel = ( { results, isEvaluating, allPassed, canOverride, postId }
 	// Loading state.
 	if ( isEvaluating ) {
 		return (
-			<div className="publish-gate-spinner">
+			<div className="mirm-editorial-guard-spinner">
 				<Spinner />
 				Evaluating rules…
 			</div>
@@ -65,22 +65,22 @@ const SidebarPanel = ( { results, isEvaluating, allPassed, canOverride, postId }
 	}
 
 	return (
-		<div className="publish-gate-panel">
+		<div className="mirm-editorial-guard-panel">
 			{ /* Status Header */ }
-			<div className="publish-gate-panel__header">
+			<div className="mirm-editorial-guard-panel__header">
 				{ allPassed ? (
-					<span className="publish-gate-panel__status publish-gate-panel__status--passed">
+					<span className="mirm-editorial-guard-panel__status mirm-editorial-guard-panel__status--passed">
 						✅ All checks passed
 					</span>
 				) : (
-					<span className="publish-gate-panel__status publish-gate-panel__status--failed">
+					<span className="mirm-editorial-guard-panel__status mirm-editorial-guard-panel__status--failed">
 						❌ { failedCount } check{ failedCount !== 1 ? 's' : '' } failed
 					</span>
 				) }
 			</div>
 
 			{ /* Rules List */ }
-			<ul className="publish-gate-panel__rules-list">
+			<ul className="mirm-editorial-guard-panel__rules-list">
 				{ results.map( ( result ) => (
 					<li key={ result.ruleId }>
 						<RuleItem result={ result } />
@@ -90,12 +90,12 @@ const SidebarPanel = ( { results, isEvaluating, allPassed, canOverride, postId }
 
 			{ /* Override Section (only for admins/editors when checks fail) */ }
 			{ canOverride && ! allPassed && ! overrideSuccess && (
-				<div className="publish-gate-panel__override-section">
-					<label className="publish-gate-panel__override-label">
+				<div className="mirm-editorial-guard-panel__override-section">
+					<label className="mirm-editorial-guard-panel__override-label">
 						Override Reason (required):
 					</label>
 					<TextareaControl
-						className="publish-gate-panel__override-reason"
+						className="mirm-editorial-guard-panel__override-reason"
 						value={ overrideReason }
 						onChange={ setOverrideReason }
 						placeholder="Explain why you're bypassing these checks…"
@@ -103,7 +103,7 @@ const SidebarPanel = ( { results, isEvaluating, allPassed, canOverride, postId }
 					/>
 					<Button
 						variant="primary"
-						className="publish-gate-panel__override-btn"
+						className="mirm-editorial-guard-panel__override-btn"
 						onClick={ handleOverride }
 						isBusy={ isOverriding }
 						disabled={ isOverriding || ! overrideReason.trim() }
@@ -115,7 +115,7 @@ const SidebarPanel = ( { results, isEvaluating, allPassed, canOverride, postId }
 
 			{ /* Override Success */ }
 			{ overrideSuccess && (
-				<div className="publish-gate-panel__override-success">
+				<div className="mirm-editorial-guard-panel__override-success">
 					✅ Override recorded — you may now publish.
 				</div>
 			) }

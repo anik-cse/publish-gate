@@ -2,7 +2,7 @@
 /**
  * Role-based permission management.
  *
- * @package Publish_Gate
+ * @package MirM_Editorial_Guard
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class Publish_Gate_Permissions
+ * Class MirM_Editorial_Guard_Permissions
  */
-class Publish_Gate_Permissions {
+class MirM_Editorial_Guard_Permissions {
 
 	/**
 	 * @var array
@@ -25,7 +25,7 @@ class Publish_Gate_Permissions {
 	 * @return array Associative array of rules with 'bypassable' flag.
 	 */
 	public function get_current_user_rules() {
-		$rules       = Publish_Gate_Settings::get_rules();
+		$rules       = MirM_Editorial_Guard_Settings::get_rules();
 		$user        = wp_get_current_user();
 		$user_rules  = array();
 
@@ -52,7 +52,7 @@ class Publish_Gate_Permissions {
 		 * @param array    $user_rules Computed rules with bypass flags.
 		 * @param \WP_User $user       Current WordPress user object.
 		 */
-		return apply_filters( 'publish_gate_user_rules', $user_rules, $user );
+		return apply_filters( 'mirm_editorial_guard_user_rules', $user_rules, $user );
 	}
 
 	/**

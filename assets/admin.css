@@ -1,11 +1,11 @@
 /**
- * Publish Gate — Admin Settings Page Styles
+ * MirM Editorial Guard — Admin Settings Page Styles
  *
- * @package Publish_Gate
+ * @package MirM_Editorial_Guard
  */
 
 /* Custom Rule Form */
-.publish-gate-add-rule-form {
+.mirm-editorial-guard-add-rule-form {
 	background: #fff;
 	border: 1px solid #c3c4c7;
 	border-radius: 4px;
@@ -14,27 +14,27 @@
 	max-width: 800px;
 }
 
-.publish-gate-add-rule-form h4 {
+.mirm-editorial-guard-add-rule-form h4 {
 	margin: 0 0 12px;
 	font-size: 14px;
 	color: #1d2327;
 }
 
-.publish-gate-new-rule-table {
+.mirm-editorial-guard-new-rule-table {
 	margin: 0;
 }
 
-.publish-gate-new-rule-table th {
+.mirm-editorial-guard-new-rule-table th {
 	padding: 10px 10px 10px 0;
 	width: 140px;
 }
 
-.publish-gate-new-rule-table td {
+.mirm-editorial-guard-new-rule-table td {
 	padding: 10px 0;
 }
 
 /* Rule Type Badge */
-.publish-gate-rule-type-badge {
+.mirm-editorial-guard-rule-type-badge {
 	display: inline-block;
 	background: #f0f0f1;
 	border: 1px solid #c3c4c7;
@@ -46,27 +46,27 @@
 }
 
 /* Delete Button */
-.publish-gate-delete-rule {
+.mirm-editorial-guard-delete-rule {
 	margin-top: 8px !important;
 	color: #b32d2e !important;
 }
 
-.publish-gate-delete-rule:hover {
+.mirm-editorial-guard-delete-rule:hover {
 	color: #a00 !important;
 }
 
 /* Status Messages */
-.publish-gate-status-msg {
+.mirm-editorial-guard-status-msg {
 	display: inline-block;
 	margin-left: 12px;
 	font-style: italic;
 }
 
-.publish-gate-status-msg.success {
+.mirm-editorial-guard-status-msg.success {
 	color: #00a32a;
 }
 
-.publish-gate-status-msg.error {
+.mirm-editorial-guard-status-msg.error {
 	color: #d63638;
 }
 
@@ -89,6 +89,6 @@
 }
 
 /* Custom rule field styling */
-.form-table td .publish-gate-rule-type-badge {
+.form-table td .mirm-editorial-guard-rule-type-badge {
 	margin-top: 6px;
 }

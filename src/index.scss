@@ -1,5 +1,5 @@
 /**
- * Publish Gate — Sidebar Styles
+ * MirM Editorial Guard — Sidebar Styles
  *
  * Styles for the sidebar panel, rule items, status indicators,
  * and the block highlight animation.
@@ -7,7 +7,7 @@
 
 /* ===== Sidebar Panel ===== */
 
-.publish-gate-panel {
+.mirm-editorial-guard-panel {
 	padding: 16px;
 
 	&__header {
@@ -106,7 +106,7 @@
 
 /* ===== Rule Item ===== */
 
-.publish-gate-rule {
+.mirm-editorial-guard-rule {
 	display: flex;
 	align-items: flex-start;
 	gap: 10px;
@@ -170,7 +170,7 @@
 
 /* ===== Block Highlight Animation ===== */
 
-@keyframes publish-gate-pulse {
+@keyframes mirm-editorial-guard-pulse {
 	0% {
 		box-shadow: 0 0 0 0 rgba(204, 24, 30, 0.4);
 	}
@@ -184,17 +184,17 @@
 	}
 }
 
-.publish-gate-highlight {
+.mirm-editorial-guard-highlight {
 	outline: 2px solid #cc181e !important;
 	outline-offset: 2px;
 	border-radius: 2px;
-	animation: publish-gate-pulse 0.8s ease-in-out 2;
+	animation: mirm-editorial-guard-pulse 0.8s ease-in-out 2;
 	transition: outline-color 0.3s ease;
 }
 
 /* ===== Spinner ===== */
 
-.publish-gate-spinner {
+.mirm-editorial-guard-spinner {
 	display: flex;
 	align-items: center;
 	justify-content: center;

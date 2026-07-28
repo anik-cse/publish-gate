@@ -1,10 +1,10 @@
 /**
- * Publish Gate — Gutenberg Sidebar Plugin
+ * MirM Editorial Guard — Gutenberg Sidebar Plugin
  *
  * Registers the editor sidebar plugin, subscribes to store changes,
  * and controls post saving lock based on rule evaluation results.
  *
- * @package Publish_Gate
+ * @package MirM_Editorial_Guard
  */
 
 import { registerPlugin } from '@wordpress/plugins';
@@ -27,7 +27,7 @@ import { evaluateRules } from './utils/evaluateRules';
 import './index.scss';
 
 /**
- * Main Publish Gate sidebar component.
+ * Main MirM Editorial Guard sidebar component.
  *
  * Subscribes to editor data, evaluates rules in real time,
  * and locks/unlocks post saving accordingly.
@@ -58,14 +58,14 @@ const PublishGateSidebar = () => {
 	);
 
 	// Get rules configuration from localized data.
-	const rulesConfig = window.publishGateData?.rules || {};
-	const canOverride = window.publishGateData?.canOverride || false;
+	const rulesConfig = window.mirmEditorialGuardData?.rules || {};
+	const canOverride = window.mirmEditorialGuardData?.canOverride || false;
 
 	useEffect( () => {
 		// Only gate 'post' type by default.
-		const guardedTypes = window.publishGateData?.guardedTypes || [ 'post' ];
+		const guardedTypes = window.mirmEditorialGuardData?.guardedTypes || [ 'post' ];
 		if ( ! guardedTypes.includes( postType ) ) {
-			unlockPostSaving( 'publish-gate-lock' );
+			unlockPostSaving( 'mirm-editorial-guard-lock' );
 			return;
 		}
 
@@ -91,9 +91,9 @@ const PublishGateSidebar = () => {
 			);
 
 			if ( hasCriticalFailure ) {
-				lockPostSaving( 'publish-gate-lock' );
+				lockPostSaving( 'mirm-editorial-guard-lock' );
 			} else {
-				unlockPostSaving( 'publish-gate-lock' );
+				unlockPostSaving( 'mirm-editorial-guard-lock' );
 			}
 		}
 	}, [ postTitle, postExcerpt, featuredMedia, categories, tags, blocks, postType, rulesConfig ] );
@@ -102,17 +102,17 @@ const PublishGateSidebar = () => {
 	const failedCount = results.filter( ( r ) => ! r.passed ).length;
 
 	const titleText = allPassed
-		? `Publish Gate ✅`
-		: `Publish Gate (${ failedCount } issue${ failedCount !== 1 ? 's' : '' })`;
+		? `MirM Editorial Guard ✅`
+		: `MirM Editorial Guard (${ failedCount } issue${ failedCount !== 1 ? 's' : '' })`;
 
 	return (
 		<>
-			<PluginSidebarMoreMenuItem target="publish-gate-sidebar" icon={ <ShieldIcon /> }>
+			<PluginSidebarMoreMenuItem target="mirm-editorial-guard-sidebar" icon={ <ShieldIcon /> }>
 				{ titleText }
 			</PluginSidebarMoreMenuItem>
 			<PluginSidebar
-				name="publish-gate-sidebar"
-				title="Publish Gate"
+				name="mirm-editorial-guard-sidebar"
+				title="MirM Editorial Guard"
 				icon={ <ShieldIcon /> }
 			>
 				<SidebarPanel
@@ -128,6 +128,6 @@ const PublishGateSidebar = () => {
 };
 
 // Register the plugin.
-registerPlugin( 'publish-gate', {
+registerPlugin( 'mirm-editorial-guard', {
 	render: PublishGateSidebar,
 } );

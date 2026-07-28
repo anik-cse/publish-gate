@@ -1,10 +1,10 @@
 /**
- * Publish Gate — Admin Settings Page JavaScript
+ * MirM Editorial Guard — Admin Settings Page JavaScript
  *
  * Handles dynamic config field rendering for custom rule types,
  * AJAX add/delete of custom rules.
  *
- * @package Publish_Gate
+ * @package MirM_Editorial_Guard
  */
 
 ( function( $ ) {

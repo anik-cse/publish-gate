@@ -1,4 +1,4 @@
-=== Publish Gate – Publishing Checklist & Content Rules ===
+=== MirM Editorial Guard – Publishing Checklist & Content Rules ===
 Contributors: mirmpro
 Tags: gutenberg, publishing, quality-control, editorial, pre-flight
 Requires at least: 6.4
@@ -12,7 +12,7 @@ A lightweight pre-publish checklist that locks the Publish button until authors 
 
 == Description ==
 
-Stop fixing the same editorial mistakes over and over. **Publish Gate** adds a native pre-flight checklist to the Block Editor and physically disables the Publish button until the post passes your rules.
+Stop fixing the same editorial mistakes over and over. **MirM Editorial Guard** adds a native pre-flight checklist to the Block Editor and physically disables the Publish button until the post passes your rules.
 
 Whether you need to enforce featured images, ban placeholder text, or ensure specific custom fields are filled, your rules are evaluated live as the author types.
 
@@ -25,7 +25,7 @@ Whether you need to enforce featured images, ban placeholder text, or ensure spe
 
 = The 13 Built-in Rules =
 
-Turn these on or off, and tweak their thresholds, directly from Settings > Publish Gate.
+Turn these on or off, and tweak their thresholds, directly from Settings > MirM Editorial Guard.
 
 1. **Featured Image** — The post must have a featured image set.
 2. **Image Alt Text** — Every single image block must have alt text.
@@ -43,16 +43,16 @@ Turn these on or off, and tweak their thresholds, directly from Settings > Publi
 
 == Installation ==
 
-1. Upload the `publish-gate` folder to `/wp-content/plugins/`.
+1. Upload the `mirm-editorial-guard` folder to `/wp-content/plugins/`.
 2. Activate it through the 'Plugins' menu.
-3. Go to **Settings > Publish Gate** to choose and configure your rules.
-4. Open the Block Editor. You will see the new Publish Gate icon in the top right.
+3. Go to **Settings > MirM Editorial Guard** to choose and configure your rules.
+4. Open the Block Editor. You will see the new MirM Editorial Guard icon in the top right.
 
 == Frequently Asked Questions ==
 
 = Does this work with the Classic Editor? =
 
-No. Publish Gate is built strictly for the Block Editor (Gutenberg). The backend guard will still block empty posts, but the checklist UI requires Gutenberg.
+No. MirM Editorial Guard is built strictly for the Block Editor (Gutenberg). The backend guard will still block empty posts, but the checklist UI requires Gutenberg.
 
 = Will this slow down the editor? =
 
@@ -77,7 +77,7 @@ Administrators and Editors can click "Override" in the sidebar. They must type a
 * Jump to Block utility.
 * Role-based override flow.
 * Double-layer validation (JavaScript frontend + PHP backend).
-* Settings page under Settings > Publish Gate.
+* Settings page under Settings > MirM Editorial Guard.
 
 == Upgrade Notice ==
 
@@ -89,7 +89,7 @@ First public release. Install and activate to start enforcing your editorial sta
 
 == Screenshots ==
 
-1. Publish Gate sidebar showing the live pre-publish checklist in the Block Editor.
+1. MirM Editorial Guard sidebar showing the live pre-publish checklist in the Block Editor.
 2. Failed checks featuring the "Jump to Block" button and visual highlight.
 3. Override dialog flow allowing Administrators to bypass rules with a reason.
 4. The main Settings page where rules can be enabled and configured.

@@ -2,7 +2,7 @@
 /**
  * Admin settings page and rules management.
  *
- * @package Publish_Gate
+ * @package MirM_Editorial_Guard
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,16 +10,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class Publish_Gate_Settings
+ * Class MirM_Editorial_Guard_Settings
  */
-class Publish_Gate_Settings {
+class MirM_Editorial_Guard_Settings {
 
 	/**
 	 * Option key in wp_options for built-in rules.
 	 *
 	 * @var string
 	 */
-	const OPTION_KEY = 'publish_gate_rules';
+	const OPTION_KEY = 'mirm_editorial_guard_rules';
 
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
@@ -36,22 +36,22 @@ class Publish_Gate_Settings {
 		return array(
 			'featured_image'  => array(
 				'enabled'     => true,
-				'label'       => __( 'Featured Image Required', 'publish-gate' ),
-				'description' => __( 'Post must have a featured image set.', 'publish-gate' ),
+				'label'       => __( 'Featured Image Required', 'mirm-editorial-guard' ),
+				'description' => __( 'Post must have a featured image set.', 'mirm-editorial-guard' ),
 				'config'      => array(),
 				'custom'      => false,
 			),
 			'image_alt_text'  => array(
 				'enabled'     => true,
-				'label'       => __( 'Alt Text on All Images', 'publish-gate' ),
-				'description' => __( 'Every image block must have a non-empty alt attribute.', 'publish-gate' ),
+				'label'       => __( 'Alt Text on All Images', 'mirm-editorial-guard' ),
+				'description' => __( 'Every image block must have a non-empty alt attribute.', 'mirm-editorial-guard' ),
 				'config'      => array(),
 				'custom'      => false,
 			),
 			'min_word_count'  => array(
 				'enabled'     => true,
-				'label'       => __( 'Minimum Word Count', 'publish-gate' ),
-				'description' => __( 'Post body must meet the minimum word count.', 'publish-gate' ),
+				'label'       => __( 'Minimum Word Count', 'mirm-editorial-guard' ),
+				'description' => __( 'Post body must meet the minimum word count.', 'mirm-editorial-guard' ),
 				'config'      => array(
 					'min_words' => 300,
 				),
@@ -59,15 +59,15 @@ class Publish_Gate_Settings {
 			),
 			'no_placeholder'  => array(
 				'enabled'     => true,
-				'label'       => __( 'No Placeholder Text', 'publish-gate' ),
-				'description' => __( 'Body must not contain Lorem Ipsum or similar dummy text.', 'publish-gate' ),
+				'label'       => __( 'No Placeholder Text', 'mirm-editorial-guard' ),
+				'description' => __( 'Body must not contain Lorem Ipsum or similar dummy text.', 'mirm-editorial-guard' ),
 				'config'      => array(),
 				'custom'      => false,
 			),
 			'title_not_empty' => array(
 				'enabled'     => true,
-				'label'       => __( 'Minimum Title Length', 'publish-gate' ),
-				'description' => __( 'Post title must meet the minimum word count.', 'publish-gate' ),
+				'label'       => __( 'Minimum Title Length', 'mirm-editorial-guard' ),
+				'description' => __( 'Post title must meet the minimum word count.', 'mirm-editorial-guard' ),
 				'config'      => array(
 					'min_words' => 1,
 				),
@@ -76,65 +76,65 @@ class Publish_Gate_Settings {
 			),
 			'min_headings'    => array(
 				'enabled'     => true,
-				'label'       => __( 'Minimum Headings (Titles)', 'publish-gate' ),
-				'description' => __( 'Post must contain at least the specified number of headings (H1-H6).', 'publish-gate' ),
+				'label'       => __( 'Minimum Headings (Titles)', 'mirm-editorial-guard' ),
+				'description' => __( 'Post must contain at least the specified number of headings (H1-H6).', 'mirm-editorial-guard' ),
 				'config'      => array( 'min_count' => 3 ),
 			),
 			'title_not_empty' => array(
 				'enabled'     => true,
-				'label'       => __( 'Title Required', 'publish-gate' ),
-				'description' => __( 'The post title cannot be empty.', 'publish-gate' ),
+				'label'       => __( 'Title Required', 'mirm-editorial-guard' ),
+				'description' => __( 'The post title cannot be empty.', 'mirm-editorial-guard' ),
 			),
 			'require_featured_image' => array(
 				'enabled'     => true,
-				'label'       => __( 'Featured Image Required', 'publish-gate' ),
-				'description' => __( 'A featured image must be set.', 'publish-gate' ),
+				'label'       => __( 'Featured Image Required', 'mirm-editorial-guard' ),
+				'description' => __( 'A featured image must be set.', 'mirm-editorial-guard' ),
 			),
 			'require_excerpt' => array(
 				'enabled'     => true,
-				'label'       => __( 'Excerpt Required', 'publish-gate' ),
-				'description' => __( 'A manual excerpt must be provided.', 'publish-gate' ),
+				'label'       => __( 'Excerpt Required', 'mirm-editorial-guard' ),
+				'description' => __( 'A manual excerpt must be provided.', 'mirm-editorial-guard' ),
 			),
 			'content_contains' => array(
 				'enabled'     => false,
-				'label'       => __( 'Content Must Contain', 'publish-gate' ),
-				'description' => __( 'Post content must contain a specific text or pattern (e.g. "Copyright", "Subscribe").', 'publish-gate' ),
+				'label'       => __( 'Content Must Contain', 'mirm-editorial-guard' ),
+				'description' => __( 'Post content must contain a specific text or pattern (e.g. "Copyright", "Subscribe").', 'mirm-editorial-guard' ),
 				'config'      => array( 'pattern' => '', 'is_regex' => '0' ),
 			),
 			'content_not_contains' => array(
 				'enabled'     => false,
-				'label'       => __( 'Content Must NOT Contain', 'publish-gate' ),
-				'description' => __( 'Post content must NOT contain a specific text or pattern (e.g. "Lorem Ipsum", "test data").', 'publish-gate' ),
+				'label'       => __( 'Content Must NOT Contain', 'mirm-editorial-guard' ),
+				'description' => __( 'Post content must NOT contain a specific text or pattern (e.g. "Lorem Ipsum", "test data").', 'mirm-editorial-guard' ),
 				'config'      => array( 'pattern' => '', 'is_regex' => '0' ),
 			),
 			'min_categories' => array(
 				'enabled'     => false,
-				'label'       => __( 'Minimum Categories', 'publish-gate' ),
-				'description' => __( 'Post must have at least this many categories.', 'publish-gate' ),
+				'label'       => __( 'Minimum Categories', 'mirm-editorial-guard' ),
+				'description' => __( 'Post must have at least this many categories.', 'mirm-editorial-guard' ),
 				'config'      => array( 'min_count' => 1 ),
 			),
 			'min_tags' => array(
 				'enabled'     => false,
-				'label'       => __( 'Minimum Tags', 'publish-gate' ),
-				'description' => __( 'Post must have at least this many tags.', 'publish-gate' ),
+				'label'       => __( 'Minimum Tags', 'mirm-editorial-guard' ),
+				'description' => __( 'Post must have at least this many tags.', 'mirm-editorial-guard' ),
 				'config'      => array( 'min_count' => 1 ),
 			),
 			'custom_field_required' => array(
 				'enabled'     => false,
-				'label'       => __( 'Custom Field Required', 'publish-gate' ),
-				'description' => __( 'A specific custom meta field must be filled out (e.g. "_yoast_wpseo_title", "guest_author_name").', 'publish-gate' ),
+				'label'       => __( 'Custom Field Required', 'mirm-editorial-guard' ),
+				'description' => __( 'A specific custom meta field must be filled out (e.g. "_yoast_wpseo_title", "guest_author_name").', 'mirm-editorial-guard' ),
 				'config'      => array( 'field_name' => '' ),
 			),
 			'max_word_count' => array(
 				'enabled'     => false,
-				'label'       => __( 'Maximum Word Count', 'publish-gate' ),
-				'description' => __( 'The post cannot exceed this many words.', 'publish-gate' ),
+				'label'       => __( 'Maximum Word Count', 'mirm-editorial-guard' ),
+				'description' => __( 'The post cannot exceed this many words.', 'mirm-editorial-guard' ),
 				'config'      => array( 'max_words' => 1000 ),
 			),
 			'required_block' => array(
 				'enabled'     => false,
-				'label'       => __( 'Required Block(s)', 'publish-gate' ),
-				'description' => __( 'The post must contain specific block types. Separate multiple blocks with commas (e.g. "core/image, core/heading").', 'publish-gate' ),
+				'label'       => __( 'Required Block(s)', 'mirm-editorial-guard' ),
+				'description' => __( 'The post must contain specific block types. Separate multiple blocks with commas (e.g. "core/image, core/heading").', 'mirm-editorial-guard' ),
 				'config'      => array( 'block_name' => 'core/image' ),
 			),
 		);
@@ -185,10 +185,10 @@ class Publish_Gate_Settings {
 	 */
 	public function add_settings_page() {
 		add_options_page(
-			__( 'Publish Gate Settings', 'publish-gate' ),
-			__( 'Publish Gate', 'publish-gate' ),
+			__( 'MirM Editorial Guard Settings', 'mirm-editorial-guard' ),
+			__( 'MirM Editorial Guard', 'mirm-editorial-guard' ),
 			'manage_options',
-			'publish-gate',
+			'mirm-editorial-guard',
 			array( $this, 'render_settings_page' )
 		);
 	}
@@ -199,15 +199,15 @@ class Publish_Gate_Settings {
 	 * @param string $hook_suffix Current admin page hook.
 	 */
 	public function enqueue_admin_assets( $hook_suffix ) {
-		if ( 'settings_page_publish-gate' !== $hook_suffix ) {
+		if ( 'settings_page_mirm-editorial-guard' !== $hook_suffix ) {
 			return;
 		}
 
 		wp_enqueue_style(
-			'publish-gate-admin',
-			PUBLISH_GATE_URL . 'assets/admin.css',
+			'mirm-editorial-guard-admin',
+			MIRM_EDITORIAL_GUARD_URL . 'assets/admin.css',
 			array(),
-			PUBLISH_GATE_VERSION
+			MIRM_EDITORIAL_GUARD_VERSION
 		);
 	}
 
@@ -216,7 +216,7 @@ class Publish_Gate_Settings {
 	 */
 	public function register_settings() {
 		register_setting(
-			'publish_gate_settings_group',
+			'mirm_editorial_guard_settings_group',
 			self::OPTION_KEY,
 			array(
 				'type'              => 'array',
@@ -227,21 +227,21 @@ class Publish_Gate_Settings {
 
 		// Built-in rules section.
 		add_settings_section(
-			'publish_gate_rules_section',
-			__( 'Publication Rules', 'publish-gate' ),
+			'mirm_editorial_guard_rules_section',
+			__( 'Publication Rules', 'mirm-editorial-guard' ),
 			array( $this, 'render_section_description' ),
-			'publish-gate'
+			'mirm-editorial-guard'
 		);
 
 		// Register built-in rule fields.
 		$rules = self::get_rules();
 		foreach ( $rules as $rule_id => $rule ) {
 			add_settings_field(
-				'publish_gate_rule_' . $rule_id,
+				'mirm_editorial_guard_rule_' . $rule_id,
 				esc_html( $rule['label'] ),
 				array( $this, 'render_rule_field' ),
-				'publish-gate',
-				'publish_gate_rules_section',
+				'mirm-editorial-guard',
+				'mirm_editorial_guard_rules_section',
 				array(
 					'rule_id' => $rule_id,
 					'rule'    => $rule,
@@ -287,7 +287,7 @@ class Publish_Gate_Settings {
 	 * Render section description for built-in rules.
 	 */
 	public function render_section_description() {
-		echo '<p>' . esc_html__( 'Enable or disable individual pre-flight checks. Posts must pass all enabled checks before publishing.', 'publish-gate' ) . '</p>';
+		echo '<p>' . esc_html__( 'Enable or disable individual pre-flight checks. Posts must pass all enabled checks before publishing.', 'mirm-editorial-guard' ) . '</p>';
 	}
 
 	/**
@@ -313,7 +313,7 @@ class Publish_Gate_Settings {
 		if ( isset( $default_rule['config']['min_words'] ) ) {
 			printf(
 				'<div style="margin-top: 8px;"><label>%s <input type="number" name="%s[%s][config][min_words]" value="%d" class="small-text" /></label></div>',
-				esc_html__( 'Minimum words:', 'publish-gate' ),
+				esc_html__( 'Minimum words:', 'mirm-editorial-guard' ),
 				esc_attr( self::OPTION_KEY ),
 				esc_attr( $rule_id ),
 				absint( isset( $rule['config']['min_words'] ) ? $rule['config']['min_words'] : $default_rule['config']['min_words'] )
@@ -323,7 +323,7 @@ class Publish_Gate_Settings {
 		if ( isset( $default_rule['config']['min_count'] ) ) {
 			printf(
 				'<div style="margin-top: 8px;"><label>%s <input type="number" name="%s[%s][config][min_count]" value="%d" class="small-text" /></label></div>',
-				esc_html__( 'Minimum count:', 'publish-gate' ),
+				esc_html__( 'Minimum count:', 'mirm-editorial-guard' ),
 				esc_attr( self::OPTION_KEY ),
 				esc_attr( $rule_id ),
 				absint( isset( $rule['config']['min_count'] ) ? $rule['config']['min_count'] : $default_rule['config']['min_count'] )
@@ -333,7 +333,7 @@ class Publish_Gate_Settings {
 		if ( isset( $default_rule['config']['pattern'] ) ) {
 			printf(
 				'<div style="margin-top: 8px;"><label>%s <input type="text" name="%s[%s][config][pattern]" value="%s" class="regular-text" /></label></div>',
-				esc_html__( 'Text/Pattern:', 'publish-gate' ),
+				esc_html__( 'Text/Pattern:', 'mirm-editorial-guard' ),
 				esc_attr( self::OPTION_KEY ),
 				esc_attr( $rule_id ),
 				esc_attr( isset( $rule['config']['pattern'] ) ? $rule['config']['pattern'] : '' )
@@ -344,14 +344,14 @@ class Publish_Gate_Settings {
 				esc_attr( self::OPTION_KEY ),
 				esc_attr( $rule_id ),
 				checked( $is_regex, true, false ),
-				esc_html__( 'Treat as Regex', 'publish-gate' )
+				esc_html__( 'Treat as Regex', 'mirm-editorial-guard' )
 			);
 		}
 		
 		if ( isset( $default_rule['config']['field_name'] ) ) {
 			printf(
 				'<div style="margin-top: 8px;"><label>%s <input type="text" name="%s[%s][config][field_name]" value="%s" class="regular-text" placeholder="_yoast_wpseo_title" /></label></div>',
-				esc_html__( 'Meta field key:', 'publish-gate' ),
+				esc_html__( 'Meta field key:', 'mirm-editorial-guard' ),
 				esc_attr( self::OPTION_KEY ),
 				esc_attr( $rule_id ),
 				esc_attr( isset( $rule['config']['field_name'] ) ? $rule['config']['field_name'] : '' )
@@ -361,7 +361,7 @@ class Publish_Gate_Settings {
 		if ( isset( $default_rule['config']['max_words'] ) ) {
 			printf(
 				'<div style="margin-top: 8px;"><label>%s <input type="number" name="%s[%s][config][max_words]" value="%d" class="small-text" /></label></div>',
-				esc_html__( 'Maximum words:', 'publish-gate' ),
+				esc_html__( 'Maximum words:', 'mirm-editorial-guard' ),
 				esc_attr( self::OPTION_KEY ),
 				esc_attr( $rule_id ),
 				absint( isset( $rule['config']['max_words'] ) ? $rule['config']['max_words'] : $default_rule['config']['max_words'] )
@@ -371,7 +371,7 @@ class Publish_Gate_Settings {
 		if ( isset( $default_rule['config']['block_name'] ) ) {
 			printf(
 				'<div style="margin-top: 8px;"><label>%s <input type="text" name="%s[%s][config][block_name]" value="%s" class="regular-text" placeholder="core/image, core/heading" /></label></div>',
-				esc_html__( 'Block Name(s) (comma separated):', 'publish-gate' ),
+				esc_html__( 'Block Name(s) (comma separated):', 'mirm-editorial-guard' ),
 				esc_attr( self::OPTION_KEY ),
 				esc_attr( $rule_id ),
 				esc_attr( isset( $rule['config']['block_name'] ) ? $rule['config']['block_name'] : '' )
@@ -392,9 +392,9 @@ class Publish_Gate_Settings {
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<form action="options.php" method="post">
 				<?php
-				settings_fields( 'publish_gate_settings_group' );
-				do_settings_sections( 'publish-gate' );
-				submit_button( __( 'Save Rules', 'publish-gate' ) );
+				settings_fields( 'mirm_editorial_guard_settings_group' );
+				do_settings_sections( 'mirm-editorial-guard' );
+				submit_button( __( 'Save Rules', 'mirm-editorial-guard' ) );
 				?>
 			</form>
 		</div>

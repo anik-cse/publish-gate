@@ -2,7 +2,7 @@
 /**
  * Custom endpoints for the editor sidebar.
  *
- * @package Publish_Gate
+ * @package MirM_Editorial_Guard
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,23 +10,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class Publish_Gate_REST
+ * Class MirM_Editorial_Guard_REST
  */
-class Publish_Gate_REST {
+class MirM_Editorial_Guard_REST {
 
 	/**
 	 * REST namespace.
 	 *
 	 * @var string
 	 */
-	const NAMESPACE = 'publish-gate/v1';
+	const NAMESPACE = 'mirm-editorial-guard/v1';
 
 	public function __construct() {
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 	}
 
 	public function register_routes() {
-		// GET /publish-gate/v1/user-rules
+		// GET /mirm-editorial-guard/v1/user-rules
 		register_rest_route(
 			self::NAMESPACE,
 			'/user-rules',
@@ -39,15 +39,16 @@ class Publish_Gate_REST {
 			)
 		);
 
-		// POST /publish-gate/v1/validate
+		// POST /mirm-editorial-guard/v1/validate
 		register_rest_route(
 			self::NAMESPACE,
 			'/validate',
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'validate_post' ),
-				'permission_callback' => function () {
-					return current_user_can( 'edit_posts' );
+				'permission_callback' => function ( $request ) {
+					$post_id = $request->get_param( 'post_id' );
+					return current_user_can( 'edit_post', $post_id );
 				},
 				'args'                => array(
 					'post_id' => array(
@@ -62,15 +63,19 @@ class Publish_Gate_REST {
 			)
 		);
 
-		// POST /publish-gate/v1/override
+		// POST /mirm-editorial-guard/v1/override
 		register_rest_route(
 			self::NAMESPACE,
 			'/override',
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'override_publish' ),
-				'permission_callback' => function () {
-					return Publish_Gate_Permissions::current_user_can_override();
+				'permission_callback' => function ( $request ) {
+					$post_id = $request->get_param( 'post_id' );
+					if ( ! current_user_can( 'edit_post', $post_id ) ) {
+						return false;
+					}
+					return MirM_Editorial_Guard_Permissions::current_user_can_override();
 				},
 				'args'                => array(
 					'post_id' => array(
@@ -93,7 +98,7 @@ class Publish_Gate_REST {
 	 * @return \WP_REST_Response
 	 */
 	public function get_user_rules( $request ) {
-		$permissions = new Publish_Gate_Permissions();
+		$permissions = new MirM_Editorial_Guard_Permissions();
 		$user_rules  = $permissions->get_current_user_rules();
 
 		return rest_ensure_response( $user_rules );
@@ -109,13 +114,13 @@ class Publish_Gate_REST {
 
 		if ( ! $post ) {
 			return new \WP_Error(
-				'publish_gate_invalid_post',
-				__( 'Post not found.', 'publish-gate' ),
+				'mirm_editorial_guard_invalid_post',
+				__( 'Post not found.', 'mirm-editorial-guard' ),
 				array( 'status' => 404 )
 			);
 		}
 
-		$rules   = Publish_Gate_Settings::get_rules();
+		$rules   = MirM_Editorial_Guard_Settings::get_rules();
 		$results = array();
 
 		foreach ( $rules as $rule_id => $rule ) {
@@ -137,9 +142,9 @@ class Publish_Gate_REST {
 
 		// Update post meta.
 		if ( $all_passed ) {
-			update_post_meta( $post_id, '_publish_gate_passed_status', 'passed' );
+			update_post_meta( $post_id, '_mirm_editorial_guard_passed_status', 'passed' );
 		} else {
-			delete_post_meta( $post_id, '_publish_gate_passed_status' );
+			delete_post_meta( $post_id, '_mirm_editorial_guard_passed_status' );
 		}
 
 		return rest_ensure_response(
@@ -162,22 +167,22 @@ class Publish_Gate_REST {
 		$post = get_post( $post_id );
 		if ( ! $post ) {
 			return new \WP_Error(
-				'publish_gate_invalid_post',
-				__( 'Post not found.', 'publish-gate' ),
+				'mirm_editorial_guard_invalid_post',
+				__( 'Post not found.', 'mirm-editorial-guard' ),
 				array( 'status' => 404 )
 			);
 		}
 
 		// Record override.
-		update_post_meta( $post_id, '_publish_gate_override_reason', $reason );
-		update_post_meta( $post_id, '_publish_gate_passed_status', 'overridden' );
+		update_post_meta( $post_id, '_mirm_editorial_guard_override_reason', $reason );
+		update_post_meta( $post_id, '_mirm_editorial_guard_passed_status', 'overridden' );
 
 		return rest_ensure_response(
 			array(
 				'post_id'  => $post_id,
 				'status'   => 'overridden',
 				'reason'   => $reason,
-				'message'  => __( 'Override recorded. You may now publish.', 'publish-gate' ),
+				'message'  => __( 'Override recorded. You may now publish.', 'mirm-editorial-guard' ),
 			)
 		);
 	}
@@ -195,8 +200,8 @@ class Publish_Gate_REST {
 				return array(
 					'passed'  => $has_thumbnail,
 					'message' => $has_thumbnail
-						? __( 'Featured image is set.', 'publish-gate' )
-						: __( 'Featured image is missing.', 'publish-gate' ),
+						? __( 'Featured image is set.', 'mirm-editorial-guard' )
+						: __( 'Featured image is missing.', 'mirm-editorial-guard' ),
 				);
 
 			case 'image_alt_text':
@@ -211,12 +216,12 @@ class Publish_Gate_REST {
 					'message' => $passed
 						? sprintf(
 							/* translators: %d: word count */
-							__( 'Word count: %d (meets minimum).', 'publish-gate' ),
+							__( 'Word count: %d (meets minimum).', 'mirm-editorial-guard' ),
 							$word_count
 						)
 						: sprintf(
 							/* translators: 1: current word count, 2: minimum required */
-							__( 'Word count: %1$d (minimum %2$d required).', 'publish-gate' ),
+							__( 'Word count: %1$d (minimum %2$d required).', 'mirm-editorial-guard' ),
 							$word_count,
 							$min_words
 						),
@@ -227,8 +232,8 @@ class Publish_Gate_REST {
 				return array(
 					'passed'  => ! $has_placeholder,
 					'message' => ! $has_placeholder
-						? __( 'No placeholder text detected.', 'publish-gate' )
-						: __( 'Placeholder text (Lorem Ipsum) detected.', 'publish-gate' ),
+						? __( 'No placeholder text detected.', 'mirm-editorial-guard' )
+						: __( 'Placeholder text (Lorem Ipsum) detected.', 'mirm-editorial-guard' ),
 				);
 
 			case 'title_not_empty':
@@ -238,10 +243,10 @@ class Publish_Gate_REST {
 				$passed     = $word_count >= $min_words;
 				if ( $passed ) {
 					/* translators: %d: word count */
-					$msg = sprintf( __( 'Title word count: %d (meets minimum).', 'publish-gate' ), $word_count );
+					$msg = sprintf( __( 'Title word count: %d (meets minimum).', 'mirm-editorial-guard' ), $word_count );
 				} else {
 					/* translators: 1: current word count, 2: minimum required */
-					$msg = sprintf( __( 'Title word count: %1$d (minimum %2$d required).', 'publish-gate' ), $word_count, $min_words );
+					$msg = sprintf( __( 'Title word count: %1$d (minimum %2$d required).', 'mirm-editorial-guard' ), $word_count, $min_words );
 				}
 				return array(
 					'passed'  => $passed,
@@ -253,8 +258,8 @@ class Publish_Gate_REST {
 				return array(
 					'passed'  => $has_excerpt,
 					'message' => $has_excerpt
-						? __( 'Excerpt is set.', 'publish-gate' )
-						: __( 'Excerpt is empty.', 'publish-gate' ),
+						? __( 'Excerpt is set.', 'mirm-editorial-guard' )
+						: __( 'Excerpt is empty.', 'mirm-editorial-guard' ),
 				);
 
 			case 'min_headings':
@@ -280,10 +285,10 @@ class Publish_Gate_REST {
 
 				if ( $passed ) {
 					/* translators: %d: number of headings */
-					$msg = sprintf( __( 'Found %d heading(s) (meets minimum).', 'publish-gate' ), $count );
+					$msg = sprintf( __( 'Found %d heading(s) (meets minimum).', 'mirm-editorial-guard' ), $count );
 				} else {
 					/* translators: 1: found headings, 2: minimum required headings */
-					$msg = sprintf( __( 'Found %1$d heading(s) (minimum %2$d required).', 'publish-gate' ), $count, $min_count );
+					$msg = sprintf( __( 'Found %1$d heading(s) (minimum %2$d required).', 'mirm-editorial-guard' ), $count, $min_count );
 				}
 				return array(
 					'passed'  => $passed,
@@ -296,7 +301,7 @@ class Publish_Gate_REST {
 				$content   = wp_strip_all_tags( $post->post_content );
 
 				if ( empty( $pattern ) ) {
-					return array( 'passed' => true, 'message' => __( 'No pattern configured.', 'publish-gate' ) );
+					return array( 'passed' => true, 'message' => __( 'No pattern configured.', 'mirm-editorial-guard' ) );
 				}
 
 				if ( $is_regex ) {
@@ -307,10 +312,10 @@ class Publish_Gate_REST {
 
 				if ( $found ) {
 					/* translators: %s: text pattern */
-					$msg = sprintf( __( 'Content contains "%s".', 'publish-gate' ), $pattern );
+					$msg = sprintf( __( 'Content contains "%s".', 'mirm-editorial-guard' ), $pattern );
 				} else {
 					/* translators: %s: text pattern */
-					$msg = sprintf( __( 'Content must contain "%s".', 'publish-gate' ), $pattern );
+					$msg = sprintf( __( 'Content must contain "%s".', 'mirm-editorial-guard' ), $pattern );
 				}
 				return array(
 					'passed'  => $found,
@@ -323,7 +328,7 @@ class Publish_Gate_REST {
 				$content   = wp_strip_all_tags( $post->post_content );
 
 				if ( empty( $pattern ) ) {
-					return array( 'passed' => true, 'message' => __( 'No pattern configured.', 'publish-gate' ) );
+					return array( 'passed' => true, 'message' => __( 'No pattern configured.', 'mirm-editorial-guard' ) );
 				}
 
 				if ( $is_regex ) {
@@ -334,10 +339,10 @@ class Publish_Gate_REST {
 
 				if ( ! $found ) {
 					/* translators: %s: text pattern */
-					$msg = sprintf( __( 'Content does not contain "%s".', 'publish-gate' ), $pattern );
+					$msg = sprintf( __( 'Content does not contain "%s".', 'mirm-editorial-guard' ), $pattern );
 				} else {
 					/* translators: %s: text pattern */
-					$msg = sprintf( __( 'Content must NOT contain "%s".', 'publish-gate' ), $pattern );
+					$msg = sprintf( __( 'Content must NOT contain "%s".', 'mirm-editorial-guard' ), $pattern );
 				}
 				return array(
 					'passed'  => ! $found,
@@ -352,10 +357,10 @@ class Publish_Gate_REST {
 
 				if ( $passed ) {
 					/* translators: 1: current categories count, 2: minimum required categories */
-					$msg = sprintf( __( 'Post has %1$d categories (minimum %2$d).', 'publish-gate' ), $count, $min_count );
+					$msg = sprintf( __( 'Post has %1$d categories (minimum %2$d).', 'mirm-editorial-guard' ), $count, $min_count );
 				} else {
 					/* translators: 1: current categories count, 2: minimum required categories */
-					$msg = sprintf( __( 'Post has %1$d categories (minimum %2$d required).', 'publish-gate' ), $count, $min_count );
+					$msg = sprintf( __( 'Post has %1$d categories (minimum %2$d required).', 'mirm-editorial-guard' ), $count, $min_count );
 				}
 				return array(
 					'passed'  => $passed,
@@ -370,10 +375,10 @@ class Publish_Gate_REST {
 
 				if ( $passed ) {
 					/* translators: 1: current tags count, 2: minimum required tags */
-					$msg = sprintf( __( 'Post has %1$d tags (minimum %2$d).', 'publish-gate' ), $count, $min_count );
+					$msg = sprintf( __( 'Post has %1$d tags (minimum %2$d).', 'mirm-editorial-guard' ), $count, $min_count );
 				} else {
 					/* translators: 1: current tags count, 2: minimum required tags */
-					$msg = sprintf( __( 'Post has %1$d tags (minimum %2$d required).', 'publish-gate' ), $count, $min_count );
+					$msg = sprintf( __( 'Post has %1$d tags (minimum %2$d required).', 'mirm-editorial-guard' ), $count, $min_count );
 				}
 				return array(
 					'passed'  => $passed,
@@ -384,7 +389,7 @@ class Publish_Gate_REST {
 				$field_name = isset( $rule['config']['field_name'] ) ? sanitize_key( $rule['config']['field_name'] ) : '';
 
 				if ( empty( $field_name ) ) {
-					return array( 'passed' => true, 'message' => __( 'No field name configured.', 'publish-gate' ) );
+					return array( 'passed' => true, 'message' => __( 'No field name configured.', 'mirm-editorial-guard' ) );
 				}
 
 				$value  = get_post_meta( $post->ID, $field_name, true );
@@ -392,10 +397,10 @@ class Publish_Gate_REST {
 
 				if ( $passed ) {
 					/* translators: %s: custom field name */
-					$msg = sprintf( __( 'Custom field "%s" is set.', 'publish-gate' ), $field_name );
+					$msg = sprintf( __( 'Custom field "%s" is set.', 'mirm-editorial-guard' ), $field_name );
 				} else {
 					/* translators: %s: custom field name */
-					$msg = sprintf( __( 'Custom field "%s" is required.', 'publish-gate' ), $field_name );
+					$msg = sprintf( __( 'Custom field "%s" is required.', 'mirm-editorial-guard' ), $field_name );
 				}
 				return array(
 					'passed'  => $passed,
@@ -408,10 +413,10 @@ class Publish_Gate_REST {
 				$passed     = $word_count <= $max_words;
 				if ( $passed ) {
 					/* translators: %d: word count */
-					$msg = sprintf( __( 'Word count: %d (meets maximum).', 'publish-gate' ), $word_count );
+					$msg = sprintf( __( 'Word count: %d (meets maximum).', 'mirm-editorial-guard' ), $word_count );
 				} else {
 					/* translators: 1: current word count, 2: maximum allowed words */
-					$msg = sprintf( __( 'Word count: %1$d (maximum %2$d allowed).', 'publish-gate' ), $word_count, $max_words );
+					$msg = sprintf( __( 'Word count: %1$d (maximum %2$d allowed).', 'mirm-editorial-guard' ), $word_count, $max_words );
 				}
 				return array(
 					'passed'  => $passed,
@@ -423,7 +428,7 @@ class Publish_Gate_REST {
 				$required_blocks = array_filter( array_map( 'trim', explode( ',', $block_name_raw ) ) );
 
 				if ( empty( $required_blocks ) ) {
-					return array( 'passed' => true, 'message' => __( 'No block specified.', 'publish-gate' ) );
+					return array( 'passed' => true, 'message' => __( 'No block specified.', 'mirm-editorial-guard' ) );
 				}
 
 				$blocks = parse_blocks( $post->post_content );
@@ -447,10 +452,10 @@ class Publish_Gate_REST {
 				$passed = empty( $missing_blocks );
 
 				if ( $passed ) {
-					$msg = __( 'Required block(s) present.', 'publish-gate' );
+					$msg = __( 'Required block(s) present.', 'mirm-editorial-guard' );
 				} else {
 					/* translators: %s: comma-separated list of missing block names */
-					$msg = sprintf( __( 'Missing required block(s): %s', 'publish-gate' ), implode( ', ', $missing_blocks ) );
+					$msg = sprintf( __( 'Missing required block(s): %s', 'mirm-editorial-guard' ), implode( ', ', $missing_blocks ) );
 				}
 				return array(
 					'passed'  => $passed,
@@ -460,7 +465,7 @@ class Publish_Gate_REST {
 			default:
 				return array(
 					'passed'  => true,
-					'message' => __( 'Unknown rule — skipped.', 'publish-gate' ),
+					'message' => __( 'Unknown rule — skipped.', 'mirm-editorial-guard' ),
 				);
 		}
 	}
@@ -476,7 +481,7 @@ class Publish_Gate_REST {
 		if ( empty( $missing ) ) {
 			return array(
 				'passed'  => true,
-				'message' => __( 'All images have alt text.', 'publish-gate' ),
+				'message' => __( 'All images have alt text.', 'mirm-editorial-guard' ),
 			);
 		}
 
@@ -488,7 +493,7 @@ class Publish_Gate_REST {
 					'%d image is missing alt text.',
 					'%d images are missing alt text.',
 					count( $missing ),
-					'publish-gate'
+					'mirm-editorial-guard'
 				),
 				count( $missing )
 			),

@@ -1,5 +1,5 @@
 {
-	"name": "publish-gate",
+	"name": "mirm-editorial-guard",
 	"version": "1.0.1",
 	"description": "A lightweight Block Editor quality-control gateway for WordPress.",
 	"author": "Mir Monoarul Alam",
@@ -18,7 +18,7 @@
 		"production": "wp-scripts build && wp-scripts plugin-zip"
 	},
 	"files": [
-		"publish-gate.php",
+		"mirm-editorial-guard.php",
 		"readme.txt",
 		"README.md",
 		"uninstall.php",

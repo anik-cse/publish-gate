@@ -28,18 +28,18 @@ const RuleItem = ( { result } ) => {
 	};
 
 	return (
-		<div className="publish-gate-rule">
+		<div className="mirm-editorial-guard-rule">
 			{ /* Status Icon */ }
 			<div
-				className={ `publish-gate-rule__icon publish-gate-rule__icon--${ passed ? 'passed' : 'failed' }` }
+				className={ `mirm-editorial-guard-rule__icon mirm-editorial-guard-rule__icon--${ passed ? 'passed' : 'failed' }` }
 			>
 				{ passed ? '✓' : '✗' }
 			</div>
 
 			{ /* Content */ }
-			<div className="publish-gate-rule__content">
-				<p className="publish-gate-rule__label">{ label }</p>
-				<p className="publish-gate-rule__message">{ message }</p>
+			<div className="mirm-editorial-guard-rule__content">
+				<p className="mirm-editorial-guard-rule__label">{ label }</p>
+				<p className="mirm-editorial-guard-rule__message">{ message }</p>
 
 				{ /* Jump to Block buttons for block-specific failures */ }
 				{ ! passed && blockClientIds && blockClientIds.length > 0 && (
@@ -48,7 +48,7 @@ const RuleItem = ( { result } ) => {
 							<Button
 								key={ clientId }
 								variant="link"
-								className="publish-gate-rule__focus-btn"
+								className="mirm-editorial-guard-rule__focus-btn"
 								onClick={ () => handleFocusBlock( clientId ) }
 							>
 								Jump to Block { blockClientIds.length > 1 ? `#${ index + 1 }` : '' }
@@ -61,7 +61,7 @@ const RuleItem = ( { result } ) => {
 				{ ! passed && panelToFocus && (
 					<Button
 						variant="link"
-						className="publish-gate-rule__focus-btn"
+						className="mirm-editorial-guard-rule__focus-btn"
 						onClick={ () => handleFocusPanel( panelToFocus ) }
 					>
 						Fix in Settings

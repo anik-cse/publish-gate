@@ -4,7 +4,7 @@
  * Selects a block by clientId, scrolls it into view,
  * and applies a temporary highlight animation.
  *
- * @package Publish_Gate
+ * @package MirM_Editorial_Guard
  */
 
 import { dispatch, select } from '@wordpress/data';
@@ -39,11 +39,11 @@ export const scrollToBlock = ( clientId ) => {
 		} );
 
 		// 4. Add highlight class.
-		blockElement.classList.add( 'publish-gate-highlight' );
+		blockElement.classList.add( 'mirm-editorial-guard-highlight' );
 
 		// 5. Remove highlight after animation completes (2s).
 		setTimeout( () => {
-			blockElement.classList.remove( 'publish-gate-highlight' );
+			blockElement.classList.remove( 'mirm-editorial-guard-highlight' );
 		}, 2000 );
 	} );
 };

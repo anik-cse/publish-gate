@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Publish Gate – Publishing Checklist & Content Rules
  * Description:       A lightweight Block Editor quality-control gateway that enforces pre-flight publication rules, blocks unverified posts, and provides role-based permission overrides.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 6.4
  * Requires PHP:      7.4
  * Author:            Mir Monoarul Alam
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin constants.
-define( 'PUBLISH_GATE_VERSION', '1.0.0' );
+define( 'PUBLISH_GATE_VERSION', '1.0.1' );
 define( 'PUBLISH_GATE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PUBLISH_GATE_URL', plugin_dir_url( __FILE__ ) );
 define( 'PUBLISH_GATE_BASENAME', plugin_basename( __FILE__ ) );

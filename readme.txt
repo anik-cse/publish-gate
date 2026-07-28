@@ -4,7 +4,7 @@ Tags: gutenberg, publishing, quality-control, editorial, pre-flight
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,12 @@ Administrators and Editors can click "Override" in the sidebar. They must type a
 
 == Changelog ==
 
+= 1.0.1 =
+* Fixed fatal PHP syntax error in REST API controller.
+* Fixed React deprecation warnings for WordPress 6.5+.
+* Fixed category and tag live evaluation issues in the Block Editor sidebar.
+* Cleaned up dead JavaScript AJAX code.
+
 = 1.0.0 =
 * Initial release.
 * 13 built-in rules with customizable settings.
@@ -74,6 +80,9 @@ Administrators and Editors can click "Override" in the sidebar. They must type a
 * Settings page under Settings > Publish Gate.
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Important bug fixes for the REST API and Block Editor sidebar.
 
 = 1.0.0 =
 First public release. Install and activate to start enforcing your editorial standards.

@@ -13,9 +13,18 @@ This plugin uses modern JavaScript/React built via `@wordpress/scripts`.
    git clone https://github.com/anik-cse/publish-gate.git
    cd publish-gate
    ```
-2. Install Node dependencies:
+
+## Development Requirements
+- **Node.js**: v18.0.0 or higher (v20.x LTS recommended). Node 14/16 are not supported by the modern build tools.
+- **npm**: v8.0.0 or higher.
+- **WordPress**: 6.1 or higher.
+
+## Development Workflow
+
+1. **Install Dependencies**
+   Run the following to cleanly install all required Node modules:
    ```bash
-   npm install
+   npm ci
    ```
 3. Start the Webpack watch server for local development:
    ```bash

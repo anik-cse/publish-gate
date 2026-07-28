@@ -4,6 +4,10 @@
 	"description": "A lightweight Block Editor quality-control gateway for WordPress.",
 	"author": "Mir Monoarul Alam",
 	"license": "GPL-2.0-or-later",
+	"engines": {
+		"node": ">=18.0.0",
+		"npm": ">=8.0.0"
+	},
 	"main": "build/index.js",
 	"scripts": {
 		"build": "wp-scripts build",

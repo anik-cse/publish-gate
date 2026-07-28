@@ -1,6 +1,6 @@
 {
 	"name": "mirm-editorial-guard",
-	"version": "1.0.1",
+	"version": "1.0.0",
 	"description": "A lightweight Block Editor quality-control gateway for WordPress.",
 	"author": "Mir Monoarul Alam",
 	"license": "GPL-2.0-or-later",

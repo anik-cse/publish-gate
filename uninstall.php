@@ -17,21 +17,8 @@ delete_option( 'mirm_editorial_guard_rules' );
 delete_option( 'mirm_editorial_guard_custom_rules' );
 
 // Clean up all post meta entries.
-global $wpdb;
-
-// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-$wpdb->delete(
-	$wpdb->postmeta,
-	array( 'meta_key' => '_mirm_editorial_guard_passed_status' ),
-	array( '%s' )
-);
-
-// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-$wpdb->delete(
-	$wpdb->postmeta,
-	array( 'meta_key' => '_mirm_editorial_guard_override_reason' ),
-	array( '%s' )
-);
+delete_post_meta_by_key( '_mirm_editorial_guard_passed_status' );
+delete_post_meta_by_key( '_mirm_editorial_guard_override_reason' );
 
 // Clean up any transients.
 // phpcs:ignore WordPress.DB.DirectDatabaseQuery

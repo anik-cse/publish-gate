@@ -15,7 +15,7 @@
 		"lint:js": "wp-scripts lint-js src/",
 		"lint:css": "wp-scripts lint-style src/",
 		"format": "wp-scripts format src/",
-		"production": "wp-scripts build && wp-scripts plugin-zip"
+		"production": "wp-scripts build && wp-scripts plugin-zip && node -e \"require('fs').renameSync('mirm-editorial-guard.zip', '../mirm-editorial-guard.zip')\""
 	},
 	"files": [
 		"mirm-editorial-guard.php",
